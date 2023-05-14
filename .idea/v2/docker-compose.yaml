@@ -1,0 +1,13 @@
+version: '2'
+services:
+  v2ray:
+    container_name: v2ray
+    image: v2ray/official
+    restart: always
+    network_mode: host
+    environment:
+      LANG: en_US.utf8
+      LC_ALL: en_US.utf8
+    volumes:
+      - "/root/docker/v2ray:/etc/v2ray"
+      - "/etc/localtime:/etc/localtime:ro"
