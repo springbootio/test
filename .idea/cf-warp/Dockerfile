@@ -5,4 +5,4 @@ RUN echo "supervisor\nsleep 5\nwarp-cli --accept-tos register\nwarp-cli --accept
 EXPOSE "40000/tcp"
 CMD ["bash", "-c", "/init.sh"]
 
-# docker build -t warp .
+# docker build -t warp:latest -f Dockerfile ./
