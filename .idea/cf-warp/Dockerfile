@@ -4,3 +4,5 @@ RUN echo "[program:warp-svc]\ncommand=/bin/bash -c /usr/bin/warp-svc\nautostart=
 RUN echo "supervisor\nsleep 5\nwarp-cli --accept-tos register\nwarp-cli --accept-tos set-mode proxy\nwarp-cli --accept-tos connect\ntail -f /var/log/warp.log\n" > /init.sh && chmod +x /init.sh
 EXPOSE "40000/tcp"
 CMD ["bash", "-c", "/init.sh"]
+
+# docker build -t warp .
