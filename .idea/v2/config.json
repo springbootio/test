@@ -1,4 +1,9 @@
 {
+    "log": {
+      "access": "/var/log/v2ray/access.log",
+      "error": "/var/log/v2ray/error.log",
+      "loglevel": "debug"
+    },
     "inbounds": [
       {
         "port": 20000,
@@ -7,7 +12,7 @@
         "settings": {
           "clients": [
             {
-              "id": "**xx**",
+              "id": "*****",
               "alterId": 64
             }
           ]
@@ -15,15 +20,73 @@
         "streamSettings": {
           "network": "ws",
           "wsSettings": {
-            "path": "/**xx**"
+            "path": "/*****"
           }
-        }
+        },
+		"sniffing": {
+		  "enabled": true,
+		  "destOverride": ["http", "tls"]
+		}
       }
     ],
     "outbounds": [
       {
         "protocol": "freedom",
         "settings": {}
+      },
+      {
+        "tag": "warp",
+		"protocol": "socks",
+		"settings": {
+		  "servers": [
+			{
+			  "address": "127.0.0.1",
+			  "port": 40000,
+			  "users": []
+			}
+		  ]
+		}
       }
-    ]
+    ],
+    "routing": {
+      "strategy": "rules",
+      "settings": {
+        "rules": [
+		  {
+			"type": "field",
+			"ip": [
+			  "0.0.0.0/8",
+			  "10.0.0.0/8",
+			  "100.64.0.0/10",
+			  "127.0.0.0/8",
+			  "169.254.0.0/16",
+			  "172.16.0.0/12",
+			  "192.0.0.0/24",
+			  "192.0.2.0/24",
+			  "192.168.0.0/16",
+			  "198.18.0.0/15",
+			  "198.51.100.0/24",
+			  "::1/128",
+			  "FC00::/7",
+			  "FE80::/10",
+			  "geoip:private"
+			],
+			"outboundTag": "blocked"
+		  },
+		  {
+			"type": "field",
+			"domain": [
+			  "openai.com",
+			  "chatgpt.com",
+			  "sora.com",
+			  "ai.com",
+			  "geosite:netflix",
+			  "reddit.com",
+			  "cloudns.net"
+			],
+			"outboundTag": "warp"
+		  }
+		]
+      }
+    }
 }
